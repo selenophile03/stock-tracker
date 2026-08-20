@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EquityPulse // Stock Tracker</title>
+    <!-- Tailwind CSS CDN for modern utility styling -->
+    <script src="https://jsdelivr.net"></script>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen font-sans">
+
+    <!-- Header Navigation -->
+    <nav class="border-b border-slate-800 bg-slate-900/50 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <span class="text-2xl">📈</span>
+                <span class="text-xl font-bold tracking-tight bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">EquityPulse</span>
+            </div>
+            <div class="text-sm text-slate-400 font-medium" id="live-clock">Loading market time...</div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        <!-- Left Column: Add Asset Form & Market Watch -->
+        <div class="space-y-6">
+            <!-- Form Card -->
+            <div class="bg-slate-800/50 border border-slate-700/50 rounded-2xl p-6 backdrop-blur-sm">
+                <h2 class="text-lg font-semibold mb-4 text-slate-200 flex items-center gap-2">📌 Add Position</h2>
+                <form id="stock-form" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1">Ticker Symbol</label>
+                        <input type="text" id="symbol" placeholder="e.g. AAPL, TSLA" required class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-slate-100 focus:outline-none focus:border-emerald-500 uppercase transition-all">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1">Buy Price ($)</label>
+                            <input type="number" id="buyPrice" step="0.01" placeholder="0.00" required class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-slate-100 focus:outline-none focus:border-emerald-500 transition-all">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1">Quantity</label>
+                            <input type="number" id="quantity" step="any" placeholder="0" required class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-slate-100 focus:outline-none focus:border-emerald-500 transition-all">
+                        </div>
+                    </div>
+                    <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3 rounded-xl transition-all cursor-pointer shadow-lg shadow-emerald-500/10">Add to Portfolio</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Right Column: Live Portfolio Dashboard -->
+        <div class="lg:col-span-2 space-y-6">
+            <!-- Portfolio Summary Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="bg-slate-800/30 border border-slate-800 rounded-2xl p-5">
+                    <p class="text-xs font-medium text-slate-400 uppercase tracking-wider">Total Portfolio Value</p>
+                    <p class="text-3xl font-bold mt-1 text-slate-100" id="total-value">$0.00</p>
+                </div>
+                <div class="bg-slate-800/30 border border-slate-800 rounded-2xl p-5">
+                    <p class="text-xs font-medium text-slate-400 uppercase tracking-wider">Total Profit / Loss</p>
+                    <p class="text-3xl font-bold mt-1" id="total-pnl">$0.00 (0.00%)</p>
+                </div>
+            </div>
+
+            <!-- Stock Positions Table/List Card -->
+            <div class="bg-slate-800/50 border border-slate-700/50 rounded-2xl overflow-hidden backdrop-blur-sm">
+                <div class="px-6 py-4 border-b border-slate-700/50 flex justify-between items-center">
+                    <h2 class="text-lg font-semibold text-slate-200">Asset Holdings</h2>
+                    <span class="text-xs bg-slate-700/50 text-slate-300 px-2.5 py-1 rounded-full font-mono" id="asset-count">0 Assets</span>
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b border-slate-800 text-xs font-semibold uppercase tracking-wider text-slate-400 bg-slate-900/20">
+                                <th class="py-4 px-6">Ticker</th>
+                                <th class="py-4 px-6 text-right">Holdings</th>
+                                <th class="py-4 px-6 text-right">Avg Buy Price</th>
+                                <th class="py-4 px-6 text-right">Current Price</th>
+                                <th class="py-4 px-6 text-right">Total Profit/Loss</th>
+                                <th class="py-4 px-6 text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="portfolio-table-body" class="divide-y divide-slate-800/50 text-sm">
+                            <!-- Injected dynamically via JS -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Empty State -->
+                <div id="empty-state" class="py-12 text-center text-slate-500 hidden">
+                    <span class="text-4xl block mb-2">🍃</span>
+                    No positions active. Add a ticker to start tracking.
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
